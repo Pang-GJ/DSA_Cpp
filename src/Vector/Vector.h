@@ -15,6 +15,7 @@ class Vector {
  protected:
   // 内部函数
   void copyFrom(T const *A, Rank low, Rank high);
+  void expand();
 
  public:
   // 构造函数：
