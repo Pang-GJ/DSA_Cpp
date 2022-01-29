@@ -37,8 +37,19 @@ class Vector {
   // 释放内部空间
   ~Vector() { delete[] _elem; }
   // 只读接口
+  Rank find(const T &e, Rank low, Rank high);  // 顺序查找
   // 可写接口
+  T &operator[](Rank r);            // 下标随机访问
+  Rank insert(Rank r, const T &e);  // 插入
+  int remove(Rank low, Rank high);  // 区间删除
+  T remove(Rank r);                 // 单元素删除
+  int deduplicate();                // 无序向量去重
+
   // 遍历接口
+  void traverse(void (*visit)(T &));  // 借助函数指针，只读或局部修改
+
+  template <typename VST>
+  void traverse(VST &visit);  // 借助函数对象机制，全局修改更便捷
 };
 
 #endif
