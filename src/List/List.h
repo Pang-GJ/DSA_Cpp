@@ -29,6 +29,8 @@ class List {
   ListNodePtr<T> last() const { return trailer->pred; }
   int size() const { return _size; }
   T operator[](Rank r) const;  // 重载下标运算符
+  ListNodePtr<T> find(const T &e, int n, ListNodePtr<T> p);
+  ListNodePtr<T> find(const T &e);
 
   /*.....可写接口*/
   // 把 e 当作 p 的前驱节点插入
@@ -43,6 +45,8 @@ class List {
   T remove(ListNodePtr<T> p);
   // 清空列表，返回原来列表的大小
   int clear();
+  // 去重
+  int deduplicate();
   /*.....遍历接口*/
 };
 

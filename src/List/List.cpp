@@ -62,8 +62,6 @@ List<T>::~List() {
 
 template <typename T>
 void List<T>::copyNodes(ListNodePtr<T> p, int n) {
-  init();
-  ListNodePtr<T> temp = header;
   while (n--) {
     insertAsLast(p->data);
     p = p->succ;
@@ -72,10 +70,39 @@ void List<T>::copyNodes(ListNodePtr<T> p, int n) {
 
 template <typename T>
 List<T>::List(const List<T> &L) {
+  init();
   copyNodes(L.first(), L.size());
 }
 
 template <typename T>
 List<T>::List() {
   init();
+}
+
+template <typename T>
+ListNodePtr<T> List<T>::find(const T &e, int n, ListNodePtr<T> p) {
+  while (n--) {
+    p = p->pred;  // 从 p 之前查找, 不包括p
+    if (e == p->data) return p;
+  }
+  return nullptr;  // 查找失败
+}
+
+template <typename T>
+ListNodePtr<T> List<T>::find(const T &e) {
+  return find(e, _size, trailer);
+}
+
+template <typename T>
+int List<T>::deduplicate() {
+  int oldSize = _size;
+  ListNodePtr<T> p = first();
+  for (Rank r = 0; p != trailer; p = p->succ) {
+    ListNodePtr<T> q = find(p->data, r, p);
+    if (!q)
+      remove(q);
+    else
+      ++r;  // 无重前缀长度
+  }
+  return oldSize - _size;   // 删除元素总数
 }
