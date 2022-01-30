@@ -16,6 +16,13 @@ class Vector {
   // 内部函数
   void copyFrom(T const *A, Rank low, Rank high);
   void expand();
+  void bubbleSort(Rank low, Rank high);
+  void selectionSort(Rank low, Rank high);
+  void merge(Rank low, Rank mid, Rank high);
+  void mergeSort(Rank low, Rank high);
+  void heapSort(Rank low, Rank high);
+  void quickSort(Rank low, Rank high);
+  void shellSort(Rank low, Rank high);
 
  public:
   // 构造函数：
@@ -37,13 +44,17 @@ class Vector {
   // 释放内部空间
   ~Vector() { delete[] _elem; }
   // 只读接口
-  Rank find(const T &e, Rank low, Rank high);  // 顺序查找
+  Rank find(const T &e, Rank low, Rank high) const;  // 顺序查找
+  int disordered() const;  // 判断所有元素是否有序
+  Rank search(const T &e, Rank low, Rank high) const;  // 有序向量查找
   // 可写接口
   T &operator[](Rank r);            // 下标随机访问
   Rank insert(Rank r, const T &e);  // 插入
   int remove(Rank low, Rank high);  // 区间删除
   T remove(Rank r);                 // 单元素删除
   int deduplicate();                // 无序向量去重
+  int uniquify();                   // 有序向量去重
+  void sort(Rank low, Rank high);  // 排序算法
 
   // 遍历接口
   void traverse(void (*visit)(T &));  // 借助函数指针，只读或局部修改
@@ -51,5 +62,43 @@ class Vector {
   template <typename VST>
   void traverse(VST &visit);  // 借助函数对象机制，全局修改更便捷
 };
+
+// 供 traverse 使用的一些函数对象实例
+// 加一
+template <typename T>
+struct Increase {
+  virtual void operator()(T &e) { e++; }
+};
+// 减一
+template <typename T>
+struct Decrease {
+  virtual void operator()(T &e) { e--; }
+};
+// 加倍
+template <typename T>
+struct Double {
+  virtual void operator()(T &e) { e *= 2; }
+};
+// 求和
+template <typename T>
+struct Sum {
+  static int sum;
+  virtual void operator()(T &e) { sum += e; }
+};
+
+// int Sum::sum = 0;
+
+// 二分查找算法
+template <typename T>
+static Rank binSearch(T *S, const T &e, Rank low, Rank high) {
+  while (low < high) {
+    Rank mid = low + ((high - low) >> 1);
+    if (e < S[mid])
+      low = mid + 1;
+    else
+      high = mid;
+  }  // 出口时：必有 S[low] = s[high] = M
+  return low - 1;
+}
 
 #endif

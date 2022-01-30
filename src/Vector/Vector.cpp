@@ -1,5 +1,8 @@
 #include "Vector.h"
 
+#include <cstdlib>
+#include <ctime>
+
 #define DEFAULT_CAPACITY 3  // 默认初始容量
 
 template <typename T>
@@ -56,6 +59,8 @@ int Vector<T>::remove(Rank low, Rank high) {
   while (high < _size) _elem[low++] = _elem[high++];
 
   _size = low;
+
+  // shrink();  // 减少不必要的空间
   return high - low;  // 返回删除区间长度
 }
 
@@ -69,7 +74,7 @@ T Vector<T>::remove(Rank r) {
 
 // 顺序查找
 template <typename T>
-Rank Vector<T>::find(const T &e, Rank low, Rank high) {
+Rank Vector<T>::find(const T &e, Rank low, Rank high) const {
   while (low < high-- && _elem[high] != e)
     ;           // 逆向查找
   return high;  // 多个命中则返回秩最大者，
@@ -103,5 +108,54 @@ template <typename VST>
 void Vector<T>::traverse(VST &visit) {
   for (Rank i = 0; i < _size; ++i) {
     visit(_elem[i]);
+  }
+}
+
+template <typename T>
+int Vector<T>::disordered() const {
+  int cnt = 0;  // 相邻逆序对的计数器
+  for (int i = 1; i < _size; ++i) {
+    if (_elem[i - 1] < _elem[i]) cnt++;
+  }
+  return cnt;
+}
+
+template <typename T>
+int Vector<T>::uniquify() {
+  Rank i = 0, j = 0;
+  while (++j < _size) {
+    if (_elem[i] != _elem[j]) _elem[++i] = _elem[j];
+  }
+  ++_size;
+  // shrink();  // 减少不必要的空间
+  return j - i;
+}
+
+template <typename T>
+Rank Vector<T>::search(const T &e, Rank low, Rank high) const {
+  return binSearch(_elem, e, low, high);
+}
+
+template <typename T>
+void Vector<T>::sort(Rank low, Rank high) {
+  switch (rand() % 6) {
+    case 1:
+      bubbleSort(low, high);
+      break;
+    case 2:
+      selectionSort(low, high);
+      break;
+    case 3:
+      mergeSort(low, high);
+      break;
+    case 4:
+      heapSort(low, high);
+      break;
+    case 5:
+      quickSort(low, high);
+      break;
+    default:
+      shellSort(low, high);
+      break;
   }
 }
