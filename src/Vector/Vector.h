@@ -48,6 +48,7 @@ class Vector {
   int disordered() const;  // 判断所有元素是否有序
   Rank search(const T &e, Rank low, Rank high) const;  // 有序向量查找
   int size() const { return _size; }
+  bool empty() const { return _size == 0; }
   // 可写接口
   T &operator[](Rank r);            // 下标随机访问
   Rank insert(Rank r, const T &e);  // 插入
