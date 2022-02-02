@@ -9,7 +9,7 @@ class Stack : public Vector<T> {
   // push pop top
   Stack() = default;
   T pop() {
-    return remove(this->size() - 1);
+    return this->remove(this->size() - 1);
   }
 
   T top() const {
@@ -17,7 +17,7 @@ class Stack : public Vector<T> {
   } 
 
   void push(const T &e) {
-    insert(this->size(), e);
+    this->insert(this->size(), e);
   }
 };
 

@@ -11,7 +11,7 @@ class Stack : public List<T> {
   }
 
   T pop() {
-    return remove(this->last());
+    return this->remove(this->last());
   }
 
   void push(const T &e) {
