@@ -5,6 +5,7 @@
 
 template <typename T>
 class Stack : public List<T> {
+ public:
   // push pop top
   T top() const {
     return this->last()->data;
