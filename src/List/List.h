@@ -22,8 +22,8 @@ class List {
 
  public:
   /*.....构造函数*/
-  List(); // 默认构造
-  List(const List<T> &L); // 复制构造
+  List();                  // 默认构造
+  List(const List<T> &L);  // 复制构造
   // 复制另一个列表的节点
   void copyNodes(ListNodePtr<T> p, int n);
   /*.....析构函数*/
@@ -32,6 +32,7 @@ class List {
   ListNodePtr<T> first() const { return header->succ; }
   ListNodePtr<T> last() const { return tailer->pred; }
   int size() const { return _size; }
+  bool empty() const { return _size == 0; }
   T operator[](Rank r) const;  // 重载下标运算符
   ListNodePtr<T> find(const T &e, int n, ListNodePtr<T> p);
   ListNodePtr<T> find(const T &e);
@@ -53,7 +54,7 @@ class List {
   int clear();
   // 去重
   int deduplicate();
-  int uniquify(); // 有序列表去重
+  int uniquify();  // 有序列表去重
   /*.....遍历接口*/
 };
 
