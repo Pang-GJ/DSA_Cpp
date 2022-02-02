@@ -38,7 +38,7 @@ class Vector {
     copyFrom(V._elem, low, high);
   }
   // 向量整体复制
-  Vector(Vector<T> const &V) { copyFrom(V._elem); }
+  Vector(Vector<T> const &V) { copyFrom(V._elem, 0, V.size()); }
 
   // 析构函数:
   // 释放内部空间
@@ -47,6 +47,7 @@ class Vector {
   Rank find(const T &e, Rank low, Rank high) const;  // 顺序查找
   int disordered() const;  // 判断所有元素是否有序
   Rank search(const T &e, Rank low, Rank high) const;  // 有序向量查找
+  int size() const { return _size; }
   // 可写接口
   T &operator[](Rank r);            // 下标随机访问
   Rank insert(Rank r, const T &e);  // 插入
@@ -54,7 +55,7 @@ class Vector {
   T remove(Rank r);                 // 单元素删除
   int deduplicate();                // 无序向量去重
   int uniquify();                   // 有序向量去重
-  void sort(Rank low, Rank high);  // 排序算法
+  void sort(Rank low, Rank high);   // 排序算法
 
   // 遍历接口
   void traverse(void (*visit)(T &));  // 借助函数指针，只读或局部修改
