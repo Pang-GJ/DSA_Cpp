@@ -155,6 +155,7 @@ ListNodePtr<T> List<T>::selectMax(ListNodePtr<T> p, int n) {
   return max;
 }
 
+// input-senitive 输入敏感的算法（容易受到数据输入情况的影响）
 template <typename T>
 void List<T>::insertionSort(ListNodePtr<T> p, int n) {
   for (int r = 0; r < n; ++r) {
