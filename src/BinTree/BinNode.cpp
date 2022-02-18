@@ -2,6 +2,10 @@
 
 #include <cstdlib>
 
+#include "travIn.h"
+#include "travPost.h"
+#include "travPre.h"
+
 template <typename T>
 void BinNode<T>::insertAtLeft(const T &e) {
   if (!_lChild) _lChild = new BinNode<T>(e, this);
@@ -54,6 +58,19 @@ void BinNode<T>::travIn(VST &visit) {
       break;
     default:
       travIn_R(this, visit);
+      break;
+  }
+}
+
+template <typename T>
+template <typename VST>
+void BinNode<T>::travPost(VST &visit) {
+  switch (rand() % 2) {
+    case 1:
+      travPost_I(this, visit);
+      break;
+    default:
+      travPost_R(this, visit);
       break;
   }
 }
