@@ -1,7 +1,9 @@
 #include "BinNode.h"
 
+#include <cstddef>
 #include <cstdlib>
 
+#include "../Queue/QueueList.h"
 #include "travIn.h"
 #include "travPost.h"
 #include "travPre.h"
@@ -72,5 +74,19 @@ void BinNode<T>::travPost(VST &visit) {
     default:
       travPost_R(this, visit);
       break;
+  }
+}
+
+template <typename T>
+template <typename VST>
+void BinNode<T>::travLevel(VST &visit) {
+  Queue<BinNodePtr<T>> que;
+  que.enqueue(this);
+  while (!que.empty()) {
+    BinNodePtr<T> node = que.front();
+    que.dequeue();
+    visit(node->_data);
+    if (node->_lChild != nullptr) que.enqueue(node->_lChild);
+    if (node->_rChild != nullptr) que.enqueue(node->_rChild);
   }
 }
